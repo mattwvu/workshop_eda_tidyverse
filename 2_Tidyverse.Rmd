@@ -326,8 +326,7 @@ per number of employees in our RScript
 
 ##### HELPFUL HINT ##########
 
-    If your created variable name is the same as an existing variable in the data frame, it will override the observations in the current variable
-    
+    If your created variable name is the same as an existing variable in the data frame, the created varaible's will override the observations of the existing variable    
 =====================================================================================
 
 
