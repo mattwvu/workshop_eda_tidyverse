@@ -1,0 +1,179 @@
+---
+title: "1_Getting_Started"
+author: "Matt Steele"
+date: "2022-07-08"
+output: html_document
+---
+
+## Special Topic | Data Analysis and Visualization with R | Part I ----
+
+  Matt Steele 
+  Government Information Librarian
+  West Virginia University 
+
+=========================================================================
+
+## Resources------------------------------------------------------------
+
+    R download and documentation - https://cran.r-project.org/
+    RStudio download and documentation - https://rstudio.com
+    
+    This workshop was developed using the O'Reilly Platform Lesson video
+      R Programming for Statistics and Data Science
+      https://libwvu.on.worldcat.org/oclc/1062397089
+
+==========================================================================
+
+## Setting Working Directory -------------------------------------------
+
+The working directory is just a file path on your computer that sets the default location of any files you read into R, or save out of R. In other words, a working directory is like a little flag somewhere on your computer which is tied to a specific analysis project.
+
+
+```{r warning= FALSE, message= FALSE}
+
+# get working directory
+
+  getwd()
+
+# set working directory
+  
+  setwd()
+  
+# you can set wd by using menu > session > set working directory > choose directory
+
+```
+
+===============================================================================
+
+## Importing Data ----------------------------------------------------------
+    
+    The read.csv function imports .csv files
+    
+```{r}
+
+  help("read.csv")
+
+```
+    
+    There several options possible. 
+    If you have Tidyverse loaded you can also use the the read_csv.
+
+There are additional built-in functions for reading data that is not in CSV format
+      
+```{r}
+
+  help("read.table")
+
+```
+
+
+==================================================================
+  ## Let's Try to load the dataset "coalpublic2020.csv" in our RScript
+==================================================================
+
+```{r}
+  
+  coalProd <-  read.csv("coalpublic2020.csv")
+  coalProd
+
+```
+
+
+    In RStudio, you can use View(gss)
+    
+```{r}
+
+    View(coalProd)
+
+```
+    
+    
+    
+## Viewing Data and Variables ----------------------------------------------
+    
+```{r}
+
+    help("names")
+    names(coalProd)
+
+```
+    
+    The names() function can display the variable names in the data.
+
+
+```{r}
+
+  help("head")
+  head(coalProd)
+
+```
+    
+    The head() function to see the first six rows of the dataset.
+  
+
+```{r}
+
+  help("str")
+  str(coalProd)
+
+```
+    
+    The str() function allows you to see the structure of the dataset.
+  
+
+```{r}
+
+  help("summary")
+  summary(coalProd)
+
+```
+    
+    The summary() function allows you to see descriptive statistics of the dataset.
+
+
+
+==================================================================
+  ## Let's try to us at the names(), head(), str(), and summary() functions in our RScript
+==================================================================  
+    
+## Subsetting variables in data frames --------------------------------------
+    
+    You can use the $ sign to specify a variable within the data for analysis and you can run specific fun
+    
+```{r}
+
+    head(coalProd$Mine.Name)
+
+```
+  
+    
+```{r}
+
+    str(coalProd$Mine.Name)
+
+```
+
+## Saving and Exporting R ---------------------------------------------------
+    
+    
+    Command history
+    
+```{r}
+
+    history() #Last 25 commands
+    history(max.show=Inf) #All commands during session
+    savehistory(file="IntroR")
+    getwd()
+
+```
+    
+    
+    You can use write.csv() to export a csv file of your data.
+    
+    
+```{r}
+
+    write.csv(coalProd, "coal_production_20202.csv")
+
+```
+    

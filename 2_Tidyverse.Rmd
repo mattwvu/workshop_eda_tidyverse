@@ -1,0 +1,531 @@
+---
+title: "Tidyverse_Cleaning_Manipulating"
+author: "Matt Steele"
+date: "2022-07-08"
+output: html_document
+---
+
+## Special Topic | Data Analysis and Visualization with R | Part II ----
+
+  Matt Steele 
+  Government Information Librarian
+  West Virginia University 
+  
+===========================================================================
+
+
+## Packages ---------------------------------------------------------
+    
+
+```{r}
+
+help("install.packages")
+
+```
+
+R is open source code after it's initial development people began adding to it with packages. An R Package is something that you can plug into RStudio to extend the basic functionality that is built in with R. One of the reasons that R has become so popular is because it has this rich ecosystem of packages that really make R a comprehensive platform for data science.
+    
+Packages have their own built-in functions that cannot be used unless the package has been loaded.
+    
+For this workshop we are going to use a package called Tidyverse that was created for people working with data. Let's load it up and install it now.
+
+===========================================================================
+
+## Let's try to install Tidyverse in our RScript
+
+===========================================================================
+
+
+
+## Loading Packages -----------------------------------------------------------
+
+```{r}
+
+help("library")
+    
+```
+
+    You only have to install a package once on you computer
+    
+    However you do need to call a package, every session you plan on using it
+
+
+===========================================================================
+
+## Let's try to load  Tidyverse in our RScript
+
+===========================================================================
+
+
+## The Tidyverse Pacakge ----------------------------------------------------
+  
+    Collection of packages for data analysis and data visualizations
+  
+      ggplot2 - data visualization
+        
+```{r}
+
+          browseURL("https://ggplot2.tidyverse.org/")
+
+```
+      
+      tibble - lighter and more user-friendly version of data.frame()
+     
+             
+```{r}
+
+          browseURL("https://tibble.tidyverse.org/")
+
+```
+
+  
+      tidyr - create tidy and meaningfully arranged data
+      
+              
+```{r}
+
+          browseURL("https://tidyr.tidyverse.org/")
+
+```
+
+  
+      readr - better importation of data into R 
+
+        
+```{r}
+
+          browseURL("https://readr.tidyverse.org/")
+
+```
+
+  
+      purrr - better functional programming
+
+        
+```{r}
+
+          browseURL("https://purrr.tidyverse.org/")
+
+```
+
+  
+      dplyr - data manipulation tools
+  
+  
+        
+```{r}
+
+          browseURL("https://dplyr.tidyverse.org/")
+
+```
+  
+        
+============================================================================
+
+## Tibble Package ---------------------------------------------------------------
+
+    Tibble allows you load a lighter and more user-friendly version of data.frame()
+    
+```{r}
+
+  help("as_tibble")
+  browseURL("https://tibble.tidyverse.org/")
+
+  coalProd <- as_tibble(coalProd)
+
+```
+
+===========================================================================
+
+## Let's try to use the as_tibble to make our data frame more user-friendly in our RScript
+
+===========================================================================
+
+## Readr Package ---------------------------------------------------------
+
+    The readr package allows for a better importation of data and also allows you to import Excel and Google Sheets files
+    
+```{r}
+
+
+  help("read_delim") #OR#
+  help("read_csv")
+  browseURL("https://readr.tidyverse.org/")
+  
+ 
+```
+
+
+===========================================================================
+
+## Let's try to use read_csv function to read a data frame about bigfoot sightings in our RScript
+    https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-09-13/bigfoot.csv
+
+===========================================================================
+
+
+
+##### HELPFUL HINT ##########
+
+    Because there can be crossover in the naming conventions of functions from packages, you can tell R specifically what package you want to call the function from using 
+    
+    package_name::function_name
+    
+```{r}
+
+   bigfoot <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-09-13/bigfoot.csv')
+
+
+```
+
+==============================================================================
+
+## Dplyr Package ---------------------------------------------------------------
+  
+    Dplyr allows you to use it's built-in functions to manipulate data
+    
+```{r}
+
+    help("dplyr")
+    browseURL("https://dplyr.tidyverse.org/")
+
+```
+    
+  
+## Computing and Re-coding Variables ----------------------------------------
+  
+    Using the combination of subsetting($) and  =  will allow you to duplicate an existing variable.
+    
+    
+    df$new_varaiable_name = df$listed_varaiable
+  
+```{r}
+
+    bigfoot$temperature_high_celcius = bigfoot$temperature_high
+    view(bigfoot)
+
+```
+    
+    You can also run computations on the new variable using this method
+
+```{r}
+
+     bigfoot$temperature_high_celcius = (bigfoot$temperature_high -32) * 5/9
+      summary(bigfoot$temperature_high)
+      summary(bigfoot$temperature_high_celcius)
+      
+
+```
+
+============================================================================
+
+
+## Manipulating Data --------------------------------------------------------
+
+
+# Remove or re-code absent data
+  
+    We can remove absent data using the mutate function from Dplyr
+
+    Remove NA values
+  
+```{r}
+
+help("na.omit")
+
+    view(bigfoot)
+
+    bigfoot_clean <- na.omit(bigfoot)
+    view(bigfoot_clean)
+
+```
+ 
+ 
+===========================================================================
+
+## Let's remove all of the NAs from the bigfoot data frame in our RScript
+
+===========================================================================
+
+
+# Function: filter() - subsets data according to criteria
+    
+```{r}
+
+?dplyr::filter
+
+filter(coalProd, Mine.State == "West Virginia")
+
+
+```
+
+
+##### HELPFUL HINT ##########
+
+    R accepts Boolean operators which will allow you to do things like filter more specifically
+    
+    |     is    OR
+    &     is    AND
+    ==    is    EQUAL
+    >     is    LESS THAN
+    <     is    GREATER THAN
+    >=    is    LESS THAN OR EQUAL TO
+    <=    is    GREATER THAN OR EQUAL TO
+    !=    is    NOT EQUAL TO
+    
+
+===========================================================================
+
+## Let's filter our Coal Production data frame to just show West Virginia Mines in Greenbrier county
+and get the mean() of the Production in our RScript
+
+===========================================================================    
+    
+
+```{r}
+
+coalProd_wv_gb <- filter(coalProd, Mine.State == "West Virginia" & Mine.County == "Greenbrier")
+  coalProd_wv_gb
+  mean(coalProd_wv_gb$Production.Tons)
+
+```
+
+    # Function: select() - keeps ONLY selected variables
+    
+```{r}
+
+?dplyr::select
+
+coalProd_names <- select(coalProd, Mine.Name, Mine.State, Mine.Type)
+coalProd_names
+
+```
+
+    # Function: mutate() - create a new variable and append it to the data frame
+    
+```{r}
+
+?dplyr::mutate
+
+bigfoot_clean <- mutate(bigfoot_clean, temperature_low_celcius = (temperature_low - 32) * 5/9)
+view(bigfoot_clean)
+
+coalProd <- mutate(coalProd, Prod.per.employee = Production.Tons/Average.Employees)
+view(coalProd)
+
+```
+
+===========================================================================
+
+## Let's create a new variable in our RScritpt that determines that amount of production 
+per number of employees in our RScript
+
+===========================================================================   
+
+===================================================================================
+
+##### HELPFUL HINT ##########
+
+    If your created variable name is the same as an existing variable in the data frame, it will override the observations in the current variable
+    
+=====================================================================================
+
+
+    # Function: transmute() - creates a new variable and discards the rest of the data frame
+    
+```{r}
+
+?dplyr::transmute
+
+```
+
+```{r}
+
+coalProd_per_employee <- transmute(coalProd, Prod.per.employee = Production.Tons/Average.Employees) 
+  head(coalProd.per.employee)
+
+```
+
+    # Function: arrange() - sort data frame by variables
+    
+```{r}
+
+?dplyr::arrange
+
+```
+    
+```{r}
+
+  arrange(coalProd, desc(Mine.State))
+  arrange(coalProd, (Mine.State), desc(Mine.Status))
+
+```
+
+===================================================================================
+
+##### HELPFUL HINT ##########
+
+    THE PIPE OPERATOR ( %>% ) is an operator in dyplr that allows you to string together multiple functions to act on one specific object
+    
+=====================================================================================
+   
+    # Function: summarise() - get a summary of a group
+    
+```{r}
+
+?dplyr::summarise
+
+dplyr::summarise(coalProd, avgProd = mean(Production.Tons)) 
+
+mean(coalProd$Production.Tons)
+
+```
+    
+    # Function: group_by() - group a categorical variable and create a new table
+ 
+
+```{r}
+
+?dplyr::group_by
+
+
+coalProd_byMineType <- coalProd %>% group_by(Mine.Type) %>% summarise(avgProd = mean(Production.Tons))
+coalProd_byMineType
+
+
+```
+    
+===========================================================================
+
+## Let's create a data frame that calculates the average lwo temperature by state of bigfoot sightings
+
+=========================================================================== 
+
+
+
+    # Function: sample() - randomly sample from the data frame
+    
+```{r}
+
+?dplyr::sample_n
+
+?dplyr::sample_frac
+
+coalProd_sample <- coalProd %>% sample_frac(.25, replace = T)
+
+coalProd_sample <- coalProd %>% sample_frac(.25, replace = T) %>% group_by(Mine.Type) %>% summarise(avgProd = mean(Production.Tons))
+
+
+```
+
+===============================================================================
+
+# Re-coding variables  --------------------------------------------------
+  
+    Adding a numeric value to an categorical variable
+  
+```{r}
+  
+    summary(coalProd$Mine.Type) # Use the summary or str function to see a variable's value label 
+    coalProd$Mine.Type <- as.factor(coalProd$Mine.Type)
+    
+    coalProd <- mutate(coalProd, Mine.Type_num = recode_factor(Mine.Type, "Refuse" = 1, "Surface" = 2, "Underground" = 3, .ordered = F))
+    
+    view(coalProd) # see the result
+
+```
+ 
+    Re-coding a numerical variable using the same method we did to create a duplicate variable except this time we are going to use [] to set our parameters
+
+```{r}
+
+
+  summary(coalProd$Average.Employees)
+
+    coalProd$Employees_cat_num[coalProd$Average.Employees < 15] = 1
+    coalProd$Employees_cat_num[coalProd$Average.Employees >= 15 & coalProd$Average.Employees <= 500] = 2
+    coalProd$Employees_cat_num[coalProd$Average.Employees > 500] = 3
+    
+    
+    view(coalProd)
+
+```
+
+    Let's then use the mutate function tp rename the variables into categorical names
+
+```{r}
+
+coalProd <- mutate(coalProd, Employees_cat = recode_factor(Employees_cat_num, "1" = "Under 15", "2" = " 15 to 500", "3" = "Over 500", .ordered = T ))
+  
+    view(coalProd)
+
+```
+
+    Let's recode all NA values in a data frame as 999
+    
+```{r}
+
+bigfoot <- bigfoot %>% mutate(title = ifelse(is.na(title), 999, title))
+
+view(bigfoot)
+
+bigfoot_filter <- filter(bigfoot, title != "999")
+bigfoot_filter
+
+```
+    
+    
+    
+
+
+# Descriptive variables ---------------------------------------------------------
+  
+    # Summary () will give you descriptive statistics for numeric and/ or frequency for factors and characters 
+
+```{r}
+
+summary(bigfoot_clean) # full data frame
+
+summary(coalProd_wv_gb$Production.Tons) # subset variable
+
+mean(coalProd_wv_gb$Production.Tons) # average of observed cases
+median(coalProd_wv_gb$Production.Tons) # the middle number(s) of observed cases
+
+min(coalProd_wv_gb$Production.Tons) # lowest number in observed cases
+max(coalProd_wv_gb$Production.Tons)  # the middle number(s) of observed cases
+range(coalProd_wv_gb$Production.Tons) # most commonly occurring number of observed cases
+
+quantile(coalProd_wv_gb$Production.Tons, .25) #1st
+quantile(coalProd_wv_gb$Production.Tons, .75) #2nd
+fivenum(coalProd_wv_gb$Production.Tons) # vector of length 5 with the minimum, 25th percentile, median, 75th percentile, maximum values
+
+sd(coalProd_wv_gb$Production.Tons) # standard deviation
+
+ coEffVar_prod <-   sd(coalProd_wv_gb$Production.Tons) /  mean(coalProd_wv_gb$Production.Tons)
+  coEffVar_prod # coefficient of variation
+
+```
+
+
+=============================================================================
+
+## Exporting your data frame ---------------------------------------------
+
+
+```{r}
+
+help("write.csv")
+help("write_csv")
+
+coalProd_save <- write_csv(coalProd_wv_gb, "coal_production_wv_greenbrier_2020.csv")
+
+```
+
+=============================================================================
+
+Let's try to export a data frame as a csv in our RScript file
+
+=============================================================================
+
+
+
