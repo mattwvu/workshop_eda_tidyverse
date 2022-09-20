@@ -15,12 +15,34 @@ output: html_document
 
 ## Resources------------------------------------------------------------
 
-    R download and documentation - https://cran.r-project.org/
-    RStudio download and documentation - https://rstudio.com
+    R download and documentation -
+
+```{r}
+
+  browseURL("https://cran.r-project.org/") 
+
+```
+
+    RStudio download and documentation
+ 
+ 
+```{r}
+
+  browseURL("https://rstudio.com") 
+
+```
+
     
     This workshop was developed using the O'Reilly Platform Lesson video
-      R Programming for Statistics and Data Science
-      https://libwvu.on.worldcat.org/oclc/1062397089
+    R Programming for Statistics and Data Science
+      
+ 
+```{r}
+
+  browseURL("https://libwvu.on.worldcat.org/oclc/1062397089") 
+
+```
+
 
 ==========================================================================
 
