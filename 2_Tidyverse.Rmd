@@ -190,32 +190,7 @@ help("library")
     browseURL("https://dplyr.tidyverse.org/")
 
 ```
-    
-  
-## Computing and Re-coding Variables ----------------------------------------
-  
-    Using the combination of subsetting($) and  =  will allow you to duplicate an existing variable.
-    
-    
-    df$new_varaiable_name = df$listed_varaiable
-  
-```{r}
 
-    bigfoot$temperature_high_celcius = bigfoot$temperature_high
-    view(bigfoot)
-
-```
-    
-    You can also run computations on the new variable using this method
-
-```{r}
-
-     bigfoot$temperature_high_celcius = (bigfoot$temperature_high -32) * 5/9
-      summary(bigfoot$temperature_high)
-      summary(bigfoot$temperature_high_celcius)
-      
-
-```
 
 ============================================================================
 
@@ -326,7 +301,8 @@ per number of employees in our RScript
 
 ##### HELPFUL HINT ##########
 
-    If your created variable name is the same as an existing variable in the data frame, the created varaible's will override the observations of the existing variable    
+    If your created variable name is the same as an existing variable in the data frame, the created varaible's will override the observations of the existing variable
+    
 =====================================================================================
 
 
@@ -434,31 +410,27 @@ coalProd_sample <- coalProd %>% sample_frac(.25, replace = T) %>% group_by(Mine.
 
 ```
  
-    Re-coding a numerical variable using the same method we did to create a duplicate variable except this time we are going to use [] to set our parameters
-
+    Re-coding a numerical variable into a categorical variable using mutate() and cut() functions
+    
 ```{r}
 
+help("cut")
+
+```
+    
+
+```{r}
 
   summary(coalProd$Average.Employees)
 
-    coalProd$Employees_cat_num[coalProd$Average.Employees < 15] = 1
-    coalProd$Employees_cat_num[coalProd$Average.Employees >= 15 & coalProd$Average.Employees <= 500] = 2
-    coalProd$Employees_cat_num[coalProd$Average.Employees > 500] = 3
-    
-    
-    view(coalProd)
-
-```
-
-    Let's then use the mutate function tp rename the variables into categorical names
-
-```{r}
-
-coalProd <- mutate(coalProd, Employees_cat = recode_factor(Employees_cat_num, "1" = "Under 15", "2" = " 15 to 500", "3" = "Over 500", .ordered = T ))
+  coalProd <- mutate(coalProd, Avg_Empl_bin = cut(Average.Employees, breaks=c(-Inf, 15, 500, Inf), labels=(c("less than 15", "15 to 500", "over 500"))))
   
-    view(coalProd)
+    coalProd <- mutate(coalProd, Avg_Empl_bin_num = cut(Average.Employees, breaks=c(-Inf, 15, 500, Inf), labels=(c(1, 2, 3))))
+
+  view(coalProd)
 
 ```
+
 
     Let's recode all NA values in a data frame as 999
     
